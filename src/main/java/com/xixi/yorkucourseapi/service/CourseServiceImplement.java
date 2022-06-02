@@ -23,7 +23,7 @@ public class CourseServiceImplement implements CourseService{
 
         @Override
         public Course fetchCourseBySubjectAndNumber(String subject, String number) throws NoSuchElementException {
-            Course course = courseRepo.findBySubjectLikeAndNumber(subject, number);
+            Course course = courseRepo.findBySubjectContainingIgnoreCaseAndNumber(subject, number);
 
             if (course == null) {
                 throw new NoSuchElementException();
@@ -46,8 +46,8 @@ public class CourseServiceImplement implements CourseService{
         return courseRepo.findAllBySubjectContainingIgnoreCase(subject);
     }
     @Override
-    public List<Course> fetchCourseBySubjectAndFirstNumber(String subject, String initialNumber) {
-        return courseRepo.findAllBySubjectLikeIgnoreCaseAndNumberStartingWith(subject, initialNumber);
+    public List<Course> fetchCourseBySubjectAndFirstNumber(String subject, String number) {
+        return courseRepo.findAllBySubjectContainingIgnoreCaseAndNumberStartingWith(subject, number);
     }
     @Override
     public List<Course> fetchCourseByTitle(String title) {
@@ -61,6 +61,11 @@ public class CourseServiceImplement implements CourseService{
     @Override
     public List<Course> fetchCourseBySubjectAndTitleAndFirstNumber(String subject, String title, String number) {
         return courseRepo.findAllBySubjectContainingIgnoreCaseAndTitleContainingIgnoreCaseAndNumberStartingWith(subject,title,number);
+    }
+
+    @Override
+    public List<Course> fetchCourseByCredit(double credit) {
+        return courseRepo.findAllByCredit(credit);
     }
 
     @Override

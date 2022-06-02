@@ -16,4 +16,6 @@ public interface CourseService {
         List<Course> fetchCourseBySubjectLikeAndCredit(String subject, double credit);
         List<Course> fetchCourseBySubjectAndTitle(String subject, String title);
         List<Course> fetchCourseBySubjectAndTitleAndFirstNumber(String subject, String title,String number);
+
+        List<Course> fetchCourseByCredit(double credit);
 }

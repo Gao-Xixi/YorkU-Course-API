@@ -64,7 +64,13 @@ public class CourseController {
         List<Course> courses = courseService.fetchCourseByTitle(title);
         return new ResponseEntity<List<Course>>(courses, HttpStatus.OK);
     }
-    @GetMapping(value="/grades/subject/number/{subject}/{number}")
+    @GetMapping(value="/grades/credit/{credit}")
+    public ResponseEntity<List<Course>> fetchCourseListByCredit(@PathVariable("credit") double credit){
+        LOGGER.info("Inside fetchCourseByCredit of Controller");
+        List<Course> courses = courseService.fetchCourseByCredit(credit);
+        return new ResponseEntity<List<Course>>(courses, HttpStatus.OK);
+    }
+    @GetMapping(value="/grades/subject/firstnumber/{subject}/{number}")
     public ResponseEntity<List<Course>> fetchCourseListBySubjectAndFirstNumber(@PathVariable("subject") String subject,
                                                                                @PathVariable("number") String number){
         LOGGER.info("Inside fetchCourseByTitle of Controller");
@@ -73,12 +79,19 @@ public class CourseController {
     }
     @GetMapping(value="/grades/subject/title/{subject}/{title}")
     public ResponseEntity<List<Course>> fetchCourseListBySubjectAndTitle(@PathVariable("subject") String subject,
-                                                                               @PathVariable("title") String number){
+                                                                               @PathVariable("title") String title){
         LOGGER.info("Inside fetchCourseByTitle of Controller");
-        List<Course> courses = courseService.fetchCourseBySubjectAndTitle(subject, number);
+        List<Course> courses = courseService.fetchCourseBySubjectAndTitle(subject, title);
         return new ResponseEntity<List<Course>>(courses, HttpStatus.OK);
     }
-    @GetMapping(value="/grades/subject/number/title/{subject}/{number}/{title}")
+    @GetMapping(value="/grades/subject/credit/{subject}/{credit}")
+    public ResponseEntity<List<Course>> fetchCourseListBySubjectAndCredit(@PathVariable("subject") String subject,
+                                                                         @PathVariable("credit") double credit){
+        LOGGER.info("Inside fetchCourseBySubjectAndCredit of Controller");
+        List<Course> courses = courseService.fetchCourseBySubjectLikeAndCredit(subject,credit);
+        return new ResponseEntity<List<Course>>(courses, HttpStatus.OK);
+    }
+    @GetMapping(value="/grades/subject/firstnumber/title/{subject}/{number}/{title}")
     public ResponseEntity<List<Course>> fetchCourseListBySubjectAndTitle(@PathVariable("subject") String subject,
                                                                          @PathVariable("title") String title,
                                                                          @PathVariable("number") String number){
@@ -86,4 +99,5 @@ public class CourseController {
         List<Course> courses = courseService.fetchCourseBySubjectAndTitleAndFirstNumber(subject, title, number);
         return new ResponseEntity<List<Course>>(courses, HttpStatus.OK);
     }
+
 }
